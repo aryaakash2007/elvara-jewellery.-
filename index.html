@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ELVARA Jewellery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --gold: #f5c842;
+      --rose: #ff6b9d;
+      --teal: #00e5cc;
+      --deep: #0d0820;
+      --mid: #130f2a;
+      --card-bg: #1a1235;
+      --text: #f0eaff;
+      --accent: #b06aff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--deep);
+      color: var(--text);
+      font-family: 'Raleway', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Stars background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 15% 20%, rgba(245,200,66,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 40% 70%, rgba(255,107,157,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 10%, rgba(0,229,204,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 55%, rgba(176,106,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 90%, rgba(245,200,66,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 40%, rgba(255,107,157,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 80%, rgba(0,229,204,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5% 50%, rgba(176,106,255,0.3) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ═══════════════════════════════
+       SCREENS / PAGES
+    ═══════════════════════════════ */
+    .screen {
+      display: none;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+    .screen.active { display: block; }
+
+    /* ═══════════════════════════════
+       WELCOME SCREEN
+    ═══════════════════════════════ */
+    #welcome-screen {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    #welcome-screen .hero-bg {
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(rgba(13,8,32,0.62), rgba(13,8,32,0.88)),
+        url("https://images.unsplash.com/photo-1515562141207-7a88fb7ce338");
+      background-size: cover;
+      background-position: center;
+      filter: saturate(1.3);
+      z-index: -1;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.22;
+      animation: floatOrb 6s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    .orb-1 { width: 400px; height: 400px; background: var(--rose); top: -100px; left: -80px; }
+    .orb-2 { width: 300px; height: 300px; background: var(--teal); bottom: -80px; right: -60px; animation-delay: 2.5s; }
+    .orb-3 { width: 200px; height: 200px; background: var(--accent); top: 40%; left: 60%; animation-delay: 1s; opacity: 0.15; }
+
+    @keyframes floatOrb {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(30px,20px) scale(1.1); }
+    }
+
+    .welcome-content {
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 1.2s ease both;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .welcome-eyebrow {
+      font-size: 11px;
+      letter-spacing: 7px;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .welcome-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(30px, 7vw, 68px);
+      font-weight: 900;
+      letter-spacing: 6px;
+      background: linear-gradient(135deg, var(--gold) 0%, #fff 50%, var(--rose) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.15;
+      margin-bottom: 10px;
+      animation: shimmer 4s ease infinite;
+      background-size: 200% 200%;
+    }
+
+    .welcome-sub {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(18px, 4vw, 32px);
+      font-weight: 400;
+      letter-spacing: 4px;
+      background: linear-gradient(90deg, var(--rose), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 30px;
+    }
+
+    .welcome-tagline {
+      font-size: 14px;
+      letter-spacing: 3px;
+      color: rgba(240,234,255,0.65);
+      font-weight: 300;
+      margin-bottom: 50px;
+    }
+
+    .welcome-tagline span { color: var(--gold); }
+
+    .btn-start {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, var(--gold), var(--rose));
+      color: #0d0820;
+      border: none;
+      padding: 16px 48px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      transition: all 0.35s ease;
+      box-shadow: 0 0 30px rgba(245,200,66,0.35), 0 0 60px rgba(255,107,157,0.2);
+      animation: pulseCta 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulseCta {
+      0%, 100% { box-shadow: 0 0 30px rgba(245,200,66,0.35), 0 0 60px rgba(255,107,157,0.2); }
+      50%       { box-shadow: 0 0 50px rgba(245,200,66,0.6),  0 0 90px rgba(255,107,157,0.35); }
+    }
+
+    .btn-start:hover {
+      transform: scale(1.06) translateY(-2px);
+      box-shadow: 0 0 60px rgba(245,200,66,0.6);
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .gems-row {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+
+    .gem-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      animation: gemPulse 2s ease-in-out infinite;
+    }
+    .gem-dot:nth-child(1) { background: var(--gold); animation-delay: 0s; }
+    .gem-dot:nth-child(2) { background: var(--rose); animation-delay: 0.4s; }
+    .gem-dot:nth-child(3) { background: var(--teal); animation-delay: 0.8s; }
+    .gem-dot:nth-child(4) { background: var(--accent); animation-delay: 1.2s; }
+    .gem-dot:nth-child(5) { background: var(--gold); animation-delay: 1.6s; }
+
+    @keyframes gemPulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50%       { transform: scale(1.8); opacity: 1; }
+    }
+
+    /* ═══════════════════════════════
+       LOGIN SCREEN
+    ═══════════════════════════════ */
+    #login-screen {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .login-box {
+      background: rgba(26,18,53,0.92);
+      border: 1px solid rgba(245,200,66,0.25);
+      border-radius: 24px;
+      padding: 50px 40px;
+      width: 100%;
+      max-width: 420px;
+      margin: 20px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 0 60px rgba(176,106,255,0.15);
+      animation: fadeInUp 0.8s ease both;
+    }
+
+    .login-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 5px;
+      background: linear-gradient(90deg, var(--gold), var(--rose), var(--teal));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .login-sub {
+      text-align: center;
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: rgba(240,234,255,0.4);
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+
+    .login-step { display: none; }
+    .login-step.active { display: block; }
+
+    .form-label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 10px;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(13,8,32,0.7);
+      border: 1px solid rgba(240,234,255,0.15);
+      border-radius: 12px;
+      padding: 14px 18px;
+      color: var(--text);
+      font-family: 'Raleway', sans-serif;
+      font-size: 16px;
+      letter-spacing: 2px;
+      outline: none;
+      transition: all 0.3s;
+      margin-bottom: 22px;
+    }
+
+    .form-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 16px rgba(245,200,66,0.2);
+    }
+
+    .form-input::placeholder { color: rgba(240,234,255,0.2); letter-spacing: 1px; }
+
+    .btn-main {
+      width: 100%;
+      background: linear-gradient(135deg, var(--gold), var(--rose));
+      color: #0d0820;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      transition: all 0.3s;
+      margin-top: 4px;
+    }
+
+    .btn-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(245,200,66,0.35);
+    }
+
+    .otp-info {
+      font-size: 12px;
+      color: rgba(240,234,255,0.4);
+      text-align: center;
+      margin-top: 16px;
+      letter-spacing: 0.5px;
+    }
+
+    .otp-info span { color: var(--gold); cursor: pointer; }
+    .otp-info span:hover { text-decoration: underline; }
+
+    .otp-inputs {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 22px;
+    }
+
+    .otp-digit {
+      width: 50px; height: 56px;
+      background: rgba(13,8,32,0.7);
+      border: 1px solid rgba(240,234,255,0.15);
+      border-radius: 12px;
+      color: var(--gold);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    .otp-digit:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 12px rgba(245,200,66,0.3);
+    }
+
+    .phone-display {
+      text-align: center;
+      font-size: 13px;
+      color: rgba(240,234,255,0.5);
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+    }
+
+    .phone-display strong { color: var(--teal); }
+
+    .error-msg {
+      color: var(--rose);
+      font-size: 12px;
+      text-align: center;
+      margin-bottom: 14px;
+      display: none;
+      letter-spacing: 0.5px;
+    }
+
+    /* ═══════════════════════════════
+       MAIN SITE
+    ═══════════════════════════════ */
+    #main-screen { display: none; }
+
+    /* NAVBAR */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 50px;
+      background: rgba(13,8,32,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(245,200,66,0.35);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--rose), var(--teal));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 8px rgba(245,200,66,0.5));
+    }
+
+    nav ul { display: flex; list-style: none; gap: 30px; }
+
+    nav a {
+      text-decoration: none;
+      color: rgba(240,234,255,0.75);
+      font-family: 'Raleway', sans-serif;
+      font-weight: 500;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: linear-gradient(90deg, var(--gold), var(--rose));
+      transition: width 0.3s;
+    }
+
+    nav a:hover { color: var(--gold); }
+    nav a:hover::after { width: 100%; }
+
+    .nav-user {
+      font-size: 12px;
+      color: var(--teal);
+      letter-spacing: 1px;
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      height: 440px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(13,8,32,0.55), rgba(13,8,32,0.88)),
+        url("https://images.unsplash.com/photo-1515562141207-7a88fb7ce338");
+      background-size: cover;
+      background-position: center;
+      filter: saturate(1.3);
+    }
+
+    .hero::before, .hero::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.25;
+      animation: floatOrb 6s ease-in-out infinite alternate;
+    }
+
+    .hero::before { width: 350px; height: 350px; background: var(--rose); top: -80px; left: -60px; }
+    .hero::after  { width: 280px; height: 280px; background: var(--teal); bottom: -60px; right: -40px; animation-delay: 2s; }
+
+    .hero-content { position: relative; z-index: 2; }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(34px, 6vw, 58px);
+      font-weight: 900;
+      letter-spacing: 6px;
+      background: linear-gradient(135deg, var(--gold) 0%, #fff 50%, var(--rose) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+      margin-bottom: 14px;
+      animation: shimmer 4s ease infinite;
+      background-size: 200% 200%;
+    }
+
+    .hero-tagline {
+      font-size: 14px;
+      letter-spacing: 3px;
+      color: rgba(240,234,255,0.7);
+      font-weight: 300;
+    }
+
+    .hero-tagline span { color: var(--gold); }
+
+    /* SECTION HEADER */
+    .section-header {
+      text-align: center;
+      padding: 55px 40px 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-header h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 13px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 10px;
+    }
+
+    .section-header p {
+      font-size: 26px;
+      font-weight: 300;
+      color: var(--text);
+      letter-spacing: 1px;
+    }
+
+    .divider {
+      width: 60px; height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--rose));
+      margin: 14px auto 0;
+      border-radius: 2px;
+    }
+
+    /* ═══════════════════════════════
+       PRODUCT SLIDER
+    ═══════════════════════════════ */
+    .slider-section {
+      position: relative;
+      z-index: 1;
+      padding: 40px 0 60px;
+      overflow: hidden;
+    }
+
+    .slider-wrapper {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .slider-track {
+      display: flex;
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .slide {
+      min-width: 100%;
+      padding: 0 60px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(176,106,255,0.25);
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--rose), var(--teal));
+      opacity: 0;
+      transition: opacity 0.4s;
+      z-index: 2;
+    }
+
+    .card:hover::before { opacity: 1; }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 60px rgba(176,106,255,0.22), 0 0 0 1px rgba(245,200,66,0.2);
+      border-color: rgba(245,200,66,0.35);
+    }
+
+    .card-img-wrap { position: relative; overflow: hidden; }
+
+    .card img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      display: block;
+    }
+
+    .card:hover img { transform: scale(1.06); }
+
+    .card-badge {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: rgba(13,8,32,0.75);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 9px;
+      letter-spacing: 2px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    .card-content {
+      padding: 24px 22px 26px;
+      text-align: center;
+    }
+
+    .card h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--text);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      color: rgba(240,234,255,0.45);
+      margin-bottom: 14px;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+
+    .price {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 20px;
+      text-shadow: 0 0 12px rgba(245,200,66,0.4);
+    }
+
+    .btn {
+      display: inline-block;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(240,234,255,0.3);
+      padding: 12px 30px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-family: 'Raleway', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--gold), var(--rose));
+      opacity: 0;
+      transition: opacity 0.35s;
+      z-index: -1;
+    }
+
+    .btn:hover {
+      border-color: transparent;
+      color: #0d0820;
+      box-shadow: 0 0 20px rgba(245,200,66,0.4);
+      transform: scale(1.04);
+    }
+
+    .btn:hover::before { opacity: 1; }
+
+    /* Slider Controls */
+    .slider-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .slider-btn {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(26,18,53,0.9);
+      border: 1px solid rgba(245,200,66,0.35);
+      color: var(--gold);
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slider-btn:hover {
+      background: rgba(245,200,66,0.15);
+      border-color: var(--gold);
+      box-shadow: 0 0 16px rgba(245,200,66,0.3);
+    }
+
+    .slider-dots {
+      display: flex;
+      gap: 10px;
+    }
+
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(245,200,66,0.25);
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+    }
+
+    .dot.active {
+      background: var(--gold);
+      box-shadow: 0 0 8px rgba(245,200,66,0.5);
+      transform: scale(1.3);
+    }
+
+    /* ═══════════════════════════════
+       ORDER MODAL
+    ═══════════════════════════════ */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(13,8,32,0.88);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal-box {
+      background: var(--card-bg);
+      border: 1px solid rgba(245,200,66,0.3);
+      border-radius: 24px;
+      padding: 44px 36px;
+      width: 100%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 0 80px rgba(245,200,66,0.1);
+      animation: fadeInUp 0.4s ease both;
+    }
+
+    .modal-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .modal-product-name {
+      text-align: center;
+      font-size: 12px;
+      color: var(--teal);
+      letter-spacing: 2px;
+      margin-bottom: 30px;
+    }
+
+    .form-row {
+      margin-bottom: 20px;
+    }
+
+    .form-row .form-label { margin-bottom: 8px; }
+
+    .form-row .form-input { margin-bottom: 0; }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .btn-cancel {
+      flex: 1;
+      background: transparent;
+      color: rgba(240,234,255,0.5);
+      border: 1px solid rgba(240,234,255,0.15);
+      padding: 13px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: 'Raleway', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+
+    .btn-cancel:hover { border-color: var(--rose); color: var(--rose); }
+
+    .btn-order {
+      flex: 2;
+    }
+
+    /* ═══════════════════════════════
+       SUCCESS SCREEN
+    ═══════════════════════════════ */
+    .success-box {
+      text-align: center;
+      padding: 20px 0;
+      display: none;
+    }
+
+    .success-box.active { display: block; }
+
+    .success-icon {
+      font-size: 60px;
+      margin-bottom: 20px;
+      animation: bounceIn 0.6s ease both;
+    }
+
+    @keyframes bounceIn {
+      0%   { transform: scale(0); }
+      60%  { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    .success-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 16px;
+      letter-spacing: 3px;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .success-msg {
+      font-size: 13px;
+      color: rgba(240,234,255,0.6);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    /* CONTACT STRIP */
+    .contact-strip {
+      margin: 0 50px 50px;
+      padding: 28px 40px;
+      background: var(--card-bg);
+      border-radius: 18px;
+      border: 1px solid rgba(0,229,204,0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 0 40px rgba(0,229,204,0.05);
+    }
+
+    .contact-strip a {
+      text-decoration: none;
+      color: var(--teal);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s;
+      padding: 8px 20px;
+      border-radius: 30px;
+      border: 1px solid rgba(0,229,204,0.25);
+    }
+
+    .contact-strip a:hover {
+      background: rgba(0,229,204,0.1);
+      color: #fff;
+      border-color: var(--teal);
+      box-shadow: 0 0 16px rgba(0,229,204,0.3);
+    }
+
+    .contact-strip span.label {
+      font-size: 11px;
+      color: rgba(240,234,255,0.4);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px;
+      border-top: 1px solid rgba(176,106,255,0.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    footer p {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: rgba(240,234,255,0.3);
+    }
+
+    footer p span {
+      background: linear-gradient(90deg, var(--gold), var(--rose));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* SPINNER */
+    .spinner {
+      display: inline-block;
+      width: 18px; height: 18px;
+      border: 2px solid rgba(13,8,32,0.3);
+      border-top-color: #0d0820;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      nav { padding: 14px 22px; }
+      nav ul { gap: 14px; }
+      .slide { padding: 0 20px; }
+      .contact-strip { margin: 0 20px 40px; padding: 22px 16px; gap: 14px; }
+      .modal-box { padding: 30px 20px; }
+      .login-box { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════
+       WELCOME SCREEN
+  ══════════════════════════════ -->
+  <div id="welcome-screen" class="active">
+    <div class="hero-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="welcome-content">
+      <p class="welcome-eyebrow">Est. 2026 &nbsp;·&nbsp; Handcrafted Excellence</p>
+      <div class="welcome-title">ELVARA</div>
+      <div class="welcome-sub">JEWELLERY</div>
+      <p class="welcome-tagline">Welcome to <span>Elvara Jewellers</span></p>
+
+      <div class="gems-row">
+        <div class="gem-dot"></div>
+        <div class="gem-dot"></div>
+        <div class="gem-dot"></div>
+        <div class="gem-dot"></div>
+        <div class="gem-dot"></div>
+      </div>
+
+      <button class="btn-start" onclick="goToLogin()">
+        💎 &nbsp; Enter the Collection
+      </button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       LOGIN SCREEN
+  ══════════════════════════════ -->
+  <div id="login-screen" class="screen">
+    <div class="login-box">
+      <div class="login-logo">ELVARA</div>
+      <div class="login-sub">Luxury Jewellery · Secure Login</div>
+
+      <!-- Step 1: Phone -->
+      <div class="login-step active" id="step-phone">
+        <label class="form-label">📱 &nbsp; Your Mobile Number</label>
+        <input class="form-input" type="tel" id="phone-input" maxlength="10" placeholder="10-digit number" inputmode="numeric">
+        <div class="error-msg" id="phone-error">Please enter a valid 10-digit number</div>
+        <button class="btn-main" onclick="sendOTP()">Send OTP →</button>
+        <p class="otp-info">We'll send a 4-digit OTP to verify your number</p>
+      </div>
+
+      <!-- Step 2: OTP -->
+      <div class="login-step" id="step-otp">
+        <p class="phone-display">OTP sent to <strong id="phone-display-num"></strong></p>
+        <label class="form-label">🔑 &nbsp; Enter OTP</label>
+        <div class="otp-inputs">
+          <input class="otp-digit" type="text" maxlength="1" inputmode="numeric" id="otp0" oninput="otpInput(this,0)">
+          <input class="otp-digit" type="text" maxlength="1" inputmode="numeric" id="otp1" oninput="otpInput(this,1)">
+          <input class="otp-digit" type="text" maxlength="1" inputmode="numeric" id="otp2" oninput="otpInput(this,2)">
+          <input class="otp-digit" type="text" maxlength="1" inputmode="numeric" id="otp3" oninput="otpInput(this,3)">
+        </div>
+        <div class="error-msg" id="otp-error">Incorrect OTP. Please try again.</div>
+        <button class="btn-main" onclick="verifyOTP()">Verify &amp; Continue →</button>
+        <p class="otp-info">Didn't receive it? <span onclick="resendOTP()">Resend OTP</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       MAIN WEBSITE
+  ══════════════════════════════ -->
+  <div id="main-screen" class="screen">
+
+    <!-- NAVBAR -->
+    <nav>
+      <div class="logo">ELVARA</div>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Shop</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <div class="nav-user" id="nav-user">💎 Member</div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-content">
+        <p class="hero-eyebrow">Est. 2026 &nbsp;·&nbsp; Handcrafted Excellence</p>
+        <h1>ELVARA<br>JEWELLERY</h1>
+        <p class="hero-tagline">Luxury Collection &nbsp;<span>💎</span>&nbsp; Wear Your Light</p>
+      </div>
+    </div>
+
+    <!-- SECTION HEADER -->
+    <div class="section-header">
+      <h2>Featured Pieces</h2>
+      <p>Crafted for those who dare to glow</p>
+      <div class="divider"></div>
+    </div>
+
+    <!-- SLIDER -->
+    <div class="slider-section">
+      <div class="slider-wrapper">
+        <div class="slider-track" id="sliderTrack">
+
+          <!-- Slide 1 -->
+          <div class="slide">
+            <div class="card">
+              <div class="card-img-wrap">
+                <img src="https://images.unsplash.com/photo-1602751584552-8ba73aad10e1" alt="Silver Necklace">
+                <span class="card-badge">BESTSELLER</span>
+              </div>
+              <div class="card-content">
+                <h3>Silver Necklace</h3>
+                <p class="card-desc">Sterling silver · Minimalist elegance</p>
+                <p class="price">₹799</p>
+                <button class="btn" onclick="openOrder('Silver Necklace','₹799')">Order Now</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="slide">
+            <div class="card">
+              <div class="card-img-wrap">
+                <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638" alt="Butterfly Necklace">
+                <span class="card-badge">NEW</span>
+              </div>
+              <div class="card-content">
+                <h3>Butterfly Necklace</h3>
+                <p class="card-desc">Delicate charm · Rose gold finish</p>
+                <p class="price">₹899</p>
+                <button class="btn" onclick="openOrder('Butterfly Necklace','₹899')">Order Now</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="slide">
+            <div class="card">
+              <div class="card-img-wrap">
+                <img src="https://images.unsplash.com/photo-1601121141461-9d6647bca1ed" alt="Royal Choker">
+                <span class="card-badge">PREMIUM</span>
+              </div>
+              <div class="card-content">
+                <h3>Royal Choker</h3>
+                <p class="card-desc">Statement piece · Limited edition</p>
+                <p class="price">₹1299</p>
+                <button class="btn" onclick="openOrder('Royal Choker','₹1299')">Order Now</button>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- end slider-track -->
+
+        <!-- Slider Navigation -->
+        <div class="slider-nav">
+          <button class="slider-btn" onclick="prevSlide()">&#8592;</button>
+          <div class="slider-dots">
+            <button class="dot active" onclick="goSlide(0)"></button>
+            <button class="dot" onclick="goSlide(1)"></button>
+            <button class="dot" onclick="goSlide(2)"></button>
+          </div>
+          <button class="slider-btn" onclick="nextSlide()">&#8594;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT STRIP -->
+    <div class="contact-strip">
+      <span class="label">Connect with us</span>
+      <a href="https://www.instagram.com/pvtt_akash13" target="_blank">📷 &nbsp;@contact on Instagram</a>
+      <a href="https://www.instagram.com/toxic__man__07?igsh=bm94dzR0d21zbXc3" target="_blank">📷 &nbsp;Manager </a>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>© 2026 &nbsp;<span>ELVARA</span>&nbsp; Neon Jewellery · All Rights Reserved</p>
+    </footer>
+  </div>
+
+  <!-- ══════════════════════════════
+       ORDER MODAL
+  ══════════════════════════════ -->
+  <div class="modal-overlay" id="orderModal">
+    <div class="modal-box">
+
+      <!-- Form view -->
+      <div id="orderForm">
+        <div class="modal-title">PLACE YOUR ORDER</div>
+        <div class="modal-product-name" id="modalProductName"></div>
+
+        <div class="form-row">
+          <label class="form-label">👤 &nbsp; Full Name</label>
+          <input class="form-input" type="text" id="ord-name" placeholder="Your full name">
+        </div>
+        <div class="form-row">
+          <label class="form-label">📱 &nbsp; Phone Number</label>
+          <input class="form-input" type="tel" id="ord-phone" placeholder="10-digit number" inputmode="numeric">
+        </div>
+        <div class="form-row">
+          <label class="form-label">📍 &nbsp; PIN Code</label>
+          <input class="form-input" type="text" id="ord-pin" placeholder="6-digit PIN code" inputmode="numeric" maxlength="6">
+        </div>
+        <div class="form-row">
+          <label class="form-label">🏠 &nbsp; Full Delivery Address</label>
+          <input class="form-input" type="text" id="ord-address" placeholder="House no., Street, City, State">
+        </div>
+
+        <div class="error-msg" id="order-error">Please fill all fields correctly.</div>
+
+        <div class="modal-actions">
+          <button class="btn-cancel" onclick="closeOrder()">Cancel</button>
+          <button class="btn-main btn-order" id="submitOrderBtn" onclick="submitOrder()">Confirm Order →</button>
+        </div>
+      </div>
+
+      <!-- Success view -->
+      <div class="success-box" id="orderSuccess">
+        <div class="success-icon">✅</div>
+        <div class="success-title">ORDER PLACED!</div>
+        <p class="success-msg">
+          Thank you! Your order details have been recorded.<br>
+          Our team will contact you on your number shortly. 💎
+        </p>
+        <button class="btn-main" onclick="closeOrder()">Back to Shop</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // ══════════════════════════════
+    // SCREEN MANAGEMENT
+    // ══════════════════════════════
+    function showScreen(id) {
+      document.querySelectorAll('.screen, #welcome-screen').forEach(s => {
+        s.classList.remove('active');
+        if (s.id !== 'main-screen') s.style.display = '';
+      });
+      const el = document.getElementById(id);
+      if (id === 'main-screen') {
+        el.style.display = 'block';
+      } else {
+        el.classList.add('active');
+      }
+    }
+
+    function goToLogin() {
+      document.getElementById('welcome-screen').classList.remove('active');
+      document.getElementById('welcome-screen').style.display = 'none';
+      document.getElementById('login-screen').style.display = 'flex';
+      document.getElementById('login-screen').classList.add('active');
+    }
+
+    // ══════════════════════════════
+    // OTP LOGIC (DEMO — fixed OTP: 1234)
+    // ══════════════════════════════
+    let generatedOTP = '';
+    let userPhone = '';
+
+    function sendOTP() {
+      const phone = document.getElementById('phone-input').value.trim();
+      const err = document.getElementById('phone-error');
+      if (!/^\d{10}$/.test(phone)) {
+        err.style.display = 'block';
+        return;
+      }
+      err.style.display = 'none';
+      userPhone = phone;
+
+      // Demo OTP: always 1234 (shown in alert for demo)
+      generatedOTP = '1234';
+      alert('📱 Demo Mode: Your OTP is ' + generatedOTP + '\n(In production, this would be sent via SMS)');
+
+      document.getElementById('phone-display-num').textContent = '+91 ' + phone;
+      document.getElementById('step-phone').classList.remove('active');
+      document.getElementById('step-otp').classList.add('active');
+      document.getElementById('otp0').focus();
+    }
+
+    function otpInput(el, idx) {
+      el.value = el.value.replace(/\D/g, '');
+      if (el.value && idx < 3) {
+        document.getElementById('otp' + (idx + 1)).focus();
+      }
+    }
+
+    function getEnteredOTP() {
+      return [0,1,2,3].map(i => document.getElementById('otp'+i).value).join('');
+    }
+
+    function verifyOTP() {
+      const entered = getEnteredOTP();
+      const err = document.getElementById('otp-error');
+      if (entered !== generatedOTP) {
+        err.style.display = 'block';
+        return;
+      }
+      err.style.display = 'none';
+
+      // Pre-fill phone in order form
+      document.getElementById('ord-phone').value = userPhone;
+      document.getElementById('nav-user').textContent = '💎 +91 ' + userPhone;
+
+      // Go to main site
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('login-screen').classList.remove('active');
+      document.getElementById('main-screen').style.display = 'block';
+    }
+
+    function resendOTP() {
+      generatedOTP = '1234';
+      [0,1,2,3].forEach(i => { document.getElementById('otp'+i).value = ''; });
+      document.getElementById('otp0').focus();
+      alert('📱 Demo Mode: OTP resent → ' + generatedOTP);
+    }
+
+    // ══════════════════════════════
+    // SLIDER
+    // ══════════════════════════════
+    let currentSlide = 0;
+    const totalSlides = 3;
+
+    function updateSlider() {
+      document.getElementById('sliderTrack').style.transform = `translateX(-${currentSlide * 100}%)`;
+      document.querySelectorAll('.dot').forEach((d, i) => {
+        d.classList.toggle('active', i === currentSlide);
+      });
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      updateSlider();
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      updateSlider();
+    }
+
+    function goSlide(n) {
+      currentSlide = n;
+      updateSlider();
+    }
+
+    // Auto-play slider every 4s
+    setInterval(nextSlide, 4000);
+
+    // ══════════════════════════════
+    // ORDER MODAL
+    // ══════════════════════════════
+    let selectedProduct = '';
+    let selectedPrice = '';
+
+    function openOrder(product, price) {
+      selectedProduct = product;
+      selectedPrice = price;
+      document.getElementById('modalProductName').textContent = product + ' — ' + price;
+      document.getElementById('orderForm').style.display = 'block';
+      document.getElementById('orderSuccess').classList.remove('active');
+      document.getElementById('order-error').style.display = 'none';
+      document.getElementById('orderModal').classList.add('active');
+    }
+
+    function closeOrder() {
+      document.getElementById('orderModal').classList.remove('active');
+      // Reset form
+      ['ord-name','ord-address','ord-pin'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('orderSuccess').classList.remove('active');
+      document.getElementById('orderForm').style.display = 'block';
+    }
+
+    async function submitOrder() {
+      const name    = document.getElementById('ord-name').value.trim();
+      const phone   = document.getElementById('ord-phone').value.trim();
+      const pin     = document.getElementById('ord-pin').value.trim();
+      const address = document.getElementById('ord-address').value.trim();
+      const err     = document.getElementById('order-error');
+
+      if (!name || !/^\d{10}$/.test(phone) || !/^\d{6}$/.test(pin) || !address) {
+        err.textContent = 'Please fill all fields correctly (10-digit phone, 6-digit PIN).';
+        err.style.display = 'block';
+        return;
+      }
+      err.style.display = 'none';
+
+      const btn = document.getElementById('submitOrderBtn');
+      btn.innerHTML = '<span class="spinner"></span> Placing...';
+      btn.disabled = true;
+
+      // Send email via EmailJS (free service)
+      // ⚠️ SETUP REQUIRED: Replace with your EmailJS credentials
+      const emailBody = `
+NEW ORDER — ELVARA JEWELLERY
+
+Product : ${selectedProduct}
+Price   : ${selectedPrice}
+
+Customer Details:
+-----------------
+Name    : ${name}
+Phone   : ${phone}
+PIN     : ${pin}
+Address : ${address}
+
+Ordered via: Elvara Website
+      `;
+
+      try {
+        // Using EmailJS public API
+        const payload = {
+          service_id: 'YOUR_EMAILJS_SERVICE_ID',     // ← Replace
+          template_id: 'YOUR_EMAILJS_TEMPLATE_ID',   // ← Replace
+          user_id: 'YOUR_EMAILJS_PUBLIC_KEY',         // ← Replace
+          template_params: {
+            to_email: 'YOUR_EMAIL@gmail.com',          // ← Replace
+            subject: `New Order: ${selectedProduct} — ${selectedPrice}`,
+            message: emailBody,
+            customer_name: name,
+            customer_phone: phone,
+            customer_pin: pin,
+            customer_address: address,
+            product: selectedProduct,
+            price: selectedPrice
+          }
+        };
+
+        const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        // Show success regardless (for demo / until EmailJS is configured)
+        showOrderSuccess(name);
+      } catch(e) {
+        // Still show success — log to console for debugging
+        console.log('Email send attempt. Configure EmailJS to receive emails.', e);
+        showOrderSuccess(name);
+      }
+
+      btn.innerHTML = 'Confirm Order →';
+      btn.disabled = false;
+    }
+
+    function showOrderSuccess(name) {
+      document.getElementById('orderForm').style.display = 'none';
+      const successEl = document.getElementById('orderSuccess');
+      successEl.classList.add('active');
+      successEl.querySelector('.success-msg').innerHTML =
+        `Thank you, <strong style="color:var(--gold)">${name}</strong>! Your order has been placed. 🎉<br>
+         Our team will contact you on your number shortly. 💎`;
+    }
+
+    // Close modal on overlay click
+    document.getElementById('orderModal').addEventListener('click', function(e) {
+      if (e.target === this) closeOrder();
+    });
+  </script>
+</body>
+</html>
